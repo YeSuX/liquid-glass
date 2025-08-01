@@ -1,19 +1,15 @@
-import { Vaso } from '../components/Vaso'
+import LiquidGlass from "./components/liquid-glass/index.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import OldGlass from "./old-component/index.jsx";
 
 function App() {
-  return <div>
-    <Vaso
-      component="span"
-      px={36}
-      py={8}
-      radius={12 * 4}
-      depth={Math.max(1.1, 1.1)}
-      blur={0.25}
-      dispersion={0.3 * 1.2}
-    >
-      <span>{'Vaso'}</span>
-    </Vaso>
-  </div>
+  return (
+    <div>
+      <OldGlass />
+      <LiquidGlass>123</LiquidGlass>
+    </div>
+  );
 }
 
-export default App
+export default App;
