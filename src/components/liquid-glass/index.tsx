@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Draggable from "gsap/Draggable";
 import { useEffect } from "react";
 
-function OldGlass() {
+function LiquidGlass() {
   gsap.registerPlugin(Draggable);
 
   useEffect(() => {
@@ -25,11 +25,6 @@ function OldGlass() {
       g: 10,
       b: 20,
       saturation: 1,
-      // these are the ones that usually change
-      // width: 336,
-      // height: 96,
-      // displace: 1,
-      // frost: 0,
     };
 
     const presets = {
@@ -76,7 +71,6 @@ function OldGlass() {
       theme: "system",
       debug: false,
       top: false,
-      // circle, dock, freestyle, etc.
       preset: "dock",
     };
 
@@ -85,7 +79,6 @@ function OldGlass() {
       expanded: true,
     });
 
-    // build this
     const debugPen = document.querySelector(".displacement-debug");
     const buildDisplacementImage = () => {
       const border =
@@ -104,19 +97,15 @@ function OldGlass() {
           <stop offset="100%" stop-color="blue"/>
         </linearGradient>
       </defs>
-      <!-- backdrop -->
       <rect x="0" y="0" width="${config.width}" height="${
         config.height
       }" fill="black"></rect>
-      <!-- red linear -->
       <rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${
         config.radius
       }" fill="url(#red)" />
-      <!-- blue linear -->
       <rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${
         config.radius
       }" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" />
-      <!-- block out distortion -->
       <rect x="${border}" y="${
         Math.min(config.width, config.height) * (config.border * 0.5)
       }" width="${config.width - border * 2}" height="${
@@ -135,7 +124,7 @@ function OldGlass() {
 
       debugPen.innerHTML = kids;
 
-      const svgEl = debugPen.querySelector(".displacement-image"); // or any other method
+      const svgEl = debugPen.querySelector(".displacement-image");
       const serialized = new XMLSerializer().serializeToString(svgEl);
       const encoded = encodeURIComponent(serialized);
       const dataUri = `data:image/svg+xml,${encoded}`;
@@ -390,7 +379,6 @@ function OldGlass() {
     ctrl.on("change", sync);
     update();
 
-    // on load – we need to align the .effect
     const { top, left } = document
       .querySelector(".dock-placeholder")
       .getBoundingClientRect();
@@ -415,7 +403,6 @@ function OldGlass() {
         <svg className="filter" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <filter id="filter" colorInterpolationFilters="sRGB">
-              {/* <!-- the input displacement image --> */}
               <feImage
                 x="0"
                 y="0"
@@ -423,10 +410,6 @@ function OldGlass() {
                 height="100%"
                 result="map"
               ></feImage>
-              {/* <!-- the displacement map to use --> */}
-              {/* <!-- <feDisplacementMap in2="map" in="SourceGraphic" /> --> */}
-              {/* <!-- the chromatic aberration for the people --> */}
-              {/* <!-- RED channel with strongest displacement --> */}
               <feDisplacementMap
                 in="SourceGraphic"
                 in2="map"
@@ -444,7 +427,6 @@ function OldGlass() {
                       0 0 0 1 0"
                 result="red"
               />
-              {/* <!-- GREEN channel (reference / least displaced) --> */}
               <feDisplacementMap
                 in="SourceGraphic"
                 in2="map"
@@ -462,7 +444,6 @@ function OldGlass() {
                       0 0 0 1 0"
                 result="green"
               />
-              {/* <!-- BLUE channel with medium displacement --> */}
               <feDisplacementMap
                 in="SourceGraphic"
                 in2="map"
@@ -480,10 +461,8 @@ function OldGlass() {
                       0 0 0 1 0"
                 result="blue"
               />
-              {/* <!-- Blend channels back together --> */}
               <feBlend in="red" in2="green" mode="screen" result="rg" />
               <feBlend in="rg" in2="blue" mode="screen" result="output" />
-              {/* <!-- output blend --> */}
               <feGaussianBlur in="output" stdDeviation="0.7" />
             </filter>
           </defs>
@@ -492,14 +471,12 @@ function OldGlass() {
       </div>
 
       <main>
-        {/* <!-- dock placeholder and instruction --> */}
         <section className="placeholder">
           <div className="dock-placeholder"></div>
         </section>
-        {/* <!-- some random text stuff --> */}
       </main>
     </>
   );
 }
 
-export default OldGlass;
+export default LiquidGlass;
