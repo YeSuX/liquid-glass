@@ -34,9 +34,75 @@ function LiquidGlass({ children }: LiquidGlassProps) {
               height="100%"
               result="map"
             ></feImage>
+            {/* 创建位移映射效果-红色通道 */}
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="map"
+              id="redchannel"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="dispRed"
+            />
+            {/* 颜色通道矩阵变换-红色通道 */}
+            <feColorMatrix
+              in="dispRed"
+              type="matrix"
+              values="1 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0"
+              result="red"
+            />
+            {/* 创建位移映射效果-绿色通道 */}
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="map"
+              id="greenchannel"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="dispGreen"
+            />
+            {/* 颜色通道矩阵变换-绿色通道 */}
+            <feColorMatrix
+              in="dispGreen"
+              type="matrix"
+              values="0 0 0 0 0
+                      0 1 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0"
+              result="green"
+            />
+            {/* 创建位移映射效果-蓝色通道 */}
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="map"
+              id="bluechannel"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="dispBlue"
+            />
+            {/* 颜色通道矩阵变换-蓝色通道 */}
+            <feColorMatrix
+              in="dispBlue"
+              type="matrix"
+              values="0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 1 0 0
+                      0 0 0 1 0"
+              result="blue"
+            />
+            {/* 第一次混合-红绿通道 */}
+            <feBlend in="red" in2="green" mode="screen" result="rg" />
+            {/* 第二次混合-红绿蓝通道 */}
+            <feBlend in="rg" in2="blue" mode="screen" result="output" />
+            {/* 高斯模糊处理 */}
+            <feGaussianBlur in="output" stdDeviation="0.7" />
           </filter>
         </defs>
       </svg>
+
+      {/* 移位图调试 */}
+      <div className="displacement-debug"></div>
     </div>
   );
 }
