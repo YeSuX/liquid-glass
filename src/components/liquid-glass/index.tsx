@@ -1,10 +1,6 @@
-import React from "react";
 import "./index.css";
-import { Pane, FolderApi } from "tweakpane";
-import gsap from "gsap";
-import Draggable from "gsap/Draggable";
 import { useCallback } from "react";
-import { Config, TweakpaneEvent } from "./types";
+import type { Config, TweakpaneEvent } from "./types";
 import { useGsapInit } from "./hooks/useGsapInit";
 import { useDisplacementImage } from "./hooks/useDisplacementImage";
 import { useStylesUpdater } from "./hooks/useStylesUpdater";
@@ -40,7 +36,7 @@ function LiquidGlass() {
   const handleSync = useCallback(
     (config: Config, event?: TweakpaneEvent) => {
       const shouldUseTransition =
-        document.startViewTransition &&
+        document.startViewTransition() &&
         event?.target?.controller?.view?.labelElement?.innerText &&
         ["theme", "top"].includes(
           event.target.controller.view.labelElement.innerText

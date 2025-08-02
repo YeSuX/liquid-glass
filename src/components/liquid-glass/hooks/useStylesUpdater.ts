@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import gsap from "gsap";
-import { Config } from "../types";
+import type { Config } from "../types";
 
 /**
  * 样式和滤镜更新hook

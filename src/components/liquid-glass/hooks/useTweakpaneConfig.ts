@@ -1,16 +1,16 @@
-import { useCallback, useEffect } from 'react';
-import { Pane, FolderApi } from 'tweakpane';
-import gsap from 'gsap';
-import Draggable from 'gsap/Draggable';
-import { Config, TweakpaneEvent } from '../types';
-import { 
-  INITIAL_CONFIG, 
-  PRESET_OPTIONS, 
-  THEME_OPTIONS, 
-  CHANNEL_OPTIONS, 
+import { useCallback, useEffect } from "react";
+import { Pane, FolderApi } from "tweakpane";
+import gsap from "gsap";
+import Draggable from "gsap/Draggable";
+import type { Config, TweakpaneEvent } from "../types";
+import {
+  INITIAL_CONFIG,
+  PRESET_OPTIONS,
+  THEME_OPTIONS,
+  CHANNEL_OPTIONS,
   BLEND_OPTIONS,
-  PRESETS 
-} from '../constants';
+  PRESETS,
+} from "../constants";
 
 interface UseTweakpaneConfigOptions {
   onConfigUpdate: (config: Config) => void;
@@ -20,7 +20,10 @@ interface UseTweakpaneConfigOptions {
 /**
  * Tweakpane配置管理hook
  */
-export const useTweakpaneConfig = ({ onConfigUpdate, onSync }: UseTweakpaneConfigOptions) => {
+export const useTweakpaneConfig = ({
+  onConfigUpdate,
+  onSync,
+}: UseTweakpaneConfigOptions) => {
   // 预设变更处理函数
   const handlePresetChange = useCallback(
     (config: Config, ctrl: Pane, settings: FolderApi) => {
@@ -47,7 +50,7 @@ export const useTweakpaneConfig = ({ onConfigUpdate, onSync }: UseTweakpaneConfi
 
   useEffect(() => {
     const config = { ...INITIAL_CONFIG };
-    
+
     try {
       const ctrl = new Pane({
         title: "config",
@@ -175,7 +178,7 @@ export const useTweakpaneConfig = ({ onConfigUpdate, onSync }: UseTweakpaneConfi
 
       // 色差控制
       const chromaticFolder = settings.addFolder({ title: "chromatic" });
-      
+
       chromaticFolder.addBinding(config, "r", {
         min: -100,
         max: 100,
@@ -203,7 +206,9 @@ export const useTweakpaneConfig = ({ onConfigUpdate, onSync }: UseTweakpaneConfi
       });
 
       // 监听变化事件
-      ctrl.on("change", (event) => onSync(config, event as unknown as TweakpaneEvent));
+      ctrl.on("change", (event) =>
+        onSync(config, event as unknown as TweakpaneEvent)
+      );
 
       // 初始化更新
       onConfigUpdate(config);
