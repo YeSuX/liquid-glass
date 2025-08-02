@@ -1,35 +1,99 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import "./index.css";
-import type { LiquidGlassProps } from "./types";
-import { useLiquidGlassConfig } from "./useLiquidGlassConfig";
-import type { TpChangeEvent } from "tweakpane";
+import { Pane } from "tweakpane";
 import gsap from "gsap";
-import { Draggable } from "gsap/Draggable";
+import Draggable from "gsap/Draggable";
+import { useEffect } from "react";
 
-function LiquidGlass({
-  children,
-  initialPreset = "pill",
-  showControls = true,
-}: LiquidGlassProps) {
+function OldGlass() {
   gsap.registerPlugin(Draggable);
 
-  const handleChange = useCallback((value: TpChangeEvent<unknown>) => {
-    console.log("handleChange", value);
-  }, []);
+  useEffect(() => {
+    const base = {
+      icons: false,
+      scale: -180,
+      radius: 16,
+      border: 0.07,
+      lightness: 50,
+      displace: 0,
+      blend: "difference",
+      x: "R",
+      y: "B",
+      alpha: 0.93,
+      blur: 11,
+      r: 0,
+      g: 10,
+      b: 20,
+      saturation: 1,
+      // these are the ones that usually change
+      // width: 336,
+      // height: 96,
+      // displace: 1,
+      // frost: 0,
+    };
 
-  const { config } = useLiquidGlassConfig({
-    initialPreset,
-    showControls,
-    onChange: handleChange,
-  });
+    const presets = {
+      dock: {
+        ...base,
+        width: 336,
+        height: 96,
+        displace: 0.2,
+        icons: true,
+        frost: 0.05,
+      },
+      pill: {
+        ...base,
+        width: 200,
+        height: 80,
+        displace: 0,
+        frost: 0,
+        radius: 40,
+      },
+      bubble: {
+        ...base,
+        radius: 70,
+        width: 140,
+        height: 140,
+        displace: 0,
+        frost: 0,
+      },
+      free: {
+        ...base,
+        width: 140,
+        height: 280,
+        radius: 80,
+        border: 0.15,
+        alpha: 0.74,
+        lightness: 60,
+        blur: 10,
+        displace: 0,
+        scale: -300,
+      },
+    };
 
-  const buildDisplacementImage = () => {
-    const border =
-      Math.min(config.width, config.height) * (config.border * 0.5);
-    const kids = `
+    const config = {
+      ...presets.dock,
+      theme: "system",
+      debug: false,
+      top: false,
+      // circle, dock, freestyle, etc.
+      preset: "dock",
+    };
+
+    const ctrl = new Pane({
+      title: "config",
+      expanded: true,
+    });
+
+    // build this
+    const debugPen = document.querySelector(".displacement-debug");
+    const buildDisplacementImage = () => {
+      const border =
+        Math.min(config.width, config.height) * (config.border * 0.5);
+      const kids = `
     <svg class="displacement-image" viewBox="0 0 ${config.width} ${
-      config.height
-    }" xmlns="http://www.w3.org/2000/svg">
+        config.height
+      }" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="red" x1="100%" y1="0%" x2="0%" y2="0%">
           <stop offset="0%" stop-color="#0000"/>
@@ -42,24 +106,24 @@ function LiquidGlass({
       </defs>
       <!-- backdrop -->
       <rect x="0" y="0" width="${config.width}" height="${
-      config.height
-    }" fill="black"></rect>
+        config.height
+      }" fill="black"></rect>
       <!-- red linear -->
       <rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${
-      config.radius
-    }" fill="url(#red)" />
+        config.radius
+      }" fill="url(#red)" />
       <!-- blue linear -->
       <rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${
-      config.radius
-    }" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" />
+        config.radius
+      }" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" />
       <!-- block out distortion -->
       <rect x="${border}" y="${
-      Math.min(config.width, config.height) * (config.border * 0.5)
-    }" width="${config.width - border * 2}" height="${
-      config.height - border * 2
-    }" rx="${config.radius}" fill="hsl(0 0% ${config.lightness}% / ${
-      config.alpha
-    }" style="filter:blur(${config.blur}px)" />
+        Math.min(config.width, config.height) * (config.border * 0.5)
+      }" width="${config.width - border * 2}" height="${
+        config.height - border * 2
+      }" rx="${config.radius}" fill="hsl(0 0% ${config.lightness}% / ${
+        config.alpha
+      }" style="filter:blur(${config.blur}px)" />
     </svg>
     <div class="label">
       <span>displacement image</span>
@@ -69,112 +133,373 @@ function LiquidGlass({
     </div>
   `;
 
-    // debugPen.innerHTML = kids;
+      debugPen.innerHTML = kids;
 
-    // const svgEl = debugPen.querySelector(".displacement-image"); // or any other method
-    // const serialized = new XMLSerializer().serializeToString(svgEl);
-    // const encoded = encodeURIComponent(serialized);
-    // const dataUri = `data:image/svg+xml,${encoded}`;
-  };
+      const svgEl = debugPen.querySelector(".displacement-image"); // or any other method
+      const serialized = new XMLSerializer().serializeToString(svgEl);
+      const encoded = encodeURIComponent(serialized);
+      const dataUri = `data:image/svg+xml,${encoded}`;
 
-  const update = () => {
-    buildDisplacementImage();
-  };
+      gsap.set("feImage", {
+        attr: {
+          href: dataUri,
+        },
+      });
+      gsap.set("feDisplacementMap", {
+        attr: {
+          xChannelSelector: config.x,
+          yChannelSelector: config.y,
+        },
+      });
+    };
 
-  useEffect(() => {
+    const update = () => {
+      buildDisplacementImage();
+      gsap.set(document.documentElement, {
+        "--width": config.width,
+        "--height": config.height,
+        "--radius": config.radius,
+        "--frost": config.frost,
+        "--output-blur": config.displace,
+        "--saturation": config.saturation,
+      });
+      gsap.set("feDisplacementMap", {
+        attr: {
+          scale: config.scale,
+        },
+      });
+      gsap.set("#redchannel", {
+        attr: {
+          scale: config.scale + config.r,
+        },
+      });
+      gsap.set("#greenchannel", {
+        attr: {
+          scale: config.scale + config.g,
+        },
+      });
+      gsap.set("#bluechannel", {
+        attr: {
+          scale: config.scale + config.b,
+        },
+      });
+      gsap.set("feGaussianBlur", {
+        attr: {
+          stdDeviation: config.displace,
+        },
+      });
+
+      document.documentElement.dataset.icons = config.icons;
+      document.documentElement.dataset.mode = config.preset;
+      document.documentElement.dataset.top = config.top;
+      document.documentElement.dataset.debug = config.debug;
+      document.documentElement.dataset.theme = config.theme;
+    };
+
+    const sync = (event) => {
+      if (
+        !document.startViewTransition ||
+        (event.target.controller.view.labelElement.innerText !== "theme" &&
+          event.target.controller.view.labelElement.innerText !== "top")
+      )
+        return update();
+      document.startViewTransition(() => update());
+    };
+    ctrl.addBinding(config, "debug");
+    ctrl.addBinding(config, "top");
+    ctrl
+      .addBinding(config, "preset", {
+        label: "mode",
+        options: {
+          dock: "dock",
+          pill: "pill",
+          bubble: "bubble",
+          free: "free",
+        },
+      })
+      .on("change", () => {
+        document.documentElement.dataset.mode = config.preset;
+        settings.expanded = config.preset === "free";
+        settings.disabled = config.preset !== "free";
+        if (config.preset !== "free") {
+          const values = presets[config.preset];
+          document.documentElement.dataset.icons = values.icons;
+          console.info({ values });
+          const morph = gsap.timeline({
+            onUpdate: () => {
+              ctrl.refresh();
+            },
+          });
+          for (const [key, value] of Object.entries(values)) {
+            morph.to(
+              config,
+              {
+                [key]: value,
+              },
+              0
+            );
+          }
+        }
+      });
+    ctrl.addBinding(config, "theme", {
+      label: "theme",
+      options: {
+        system: "system",
+        light: "light",
+        dark: "dark",
+      },
+    });
+    const settings = ctrl.addFolder({
+      title: "settings",
+      disabled: true,
+      expanded: false,
+    });
+
+    settings.addBinding(config, "frost", {
+      label: "frost",
+      min: 0,
+      max: 1,
+      step: 0.01,
+    });
+    settings.addBinding(config, "saturation", {
+      min: 0,
+      max: 2,
+      step: 0.1,
+    });
+    settings.addBinding(config, "icons");
+    settings.addBinding(config, "width", {
+      min: 80,
+      max: 500,
+      step: 1,
+      label: "width (px)",
+    });
+    settings.addBinding(config, "height", {
+      min: 35,
+      max: 500,
+      step: 1,
+      label: "height (px)",
+    });
+    settings.addBinding(config, "radius", {
+      min: 0,
+      max: 500,
+      step: 1,
+      label: "radius (px)",
+    });
+    settings.addBinding(config, "border", {
+      min: 0,
+      max: 1,
+      step: 0.01,
+      label: "border",
+    });
+    settings.addBinding(config, "alpha", {
+      min: 0,
+      max: 1,
+      step: 0.01,
+      label: "alpha",
+    });
+    settings.addBinding(config, "lightness", {
+      min: 0,
+      max: 100,
+      step: 1,
+      label: "lightness",
+    });
+    settings.addBinding(config, "blur", {
+      min: 0,
+      max: 20,
+      step: 1,
+      label: "input blur",
+    });
+    settings.addBinding(config, "displace", {
+      min: 0,
+      max: 12,
+      step: 0.1,
+      label: "output blur",
+    });
+    settings.addBinding(config, "x", {
+      label: "channel x",
+      options: {
+        r: "R",
+        g: "G",
+        b: "B",
+      },
+    });
+    settings.addBinding(config, "y", {
+      label: "channel y",
+      options: {
+        r: "R",
+        g: "G",
+        b: "B",
+      },
+    });
+    settings.addBinding(config, "blend", {
+      options: {
+        normal: "normal",
+        multiply: "multiply",
+        screen: "screen",
+        overlay: "overlay",
+        darken: "darken",
+        lighten: "lighten",
+        "color-dodge": "color-dodge",
+        "color-burn": "color-burn",
+        "hard-light": "hard-light",
+        "soft-light": "soft-light",
+        difference: "difference",
+        exclusion: "exclusion",
+        hue: "hue",
+        saturation: "saturation",
+        color: "color",
+        luminosity: "luminosity",
+        "plus-darker": "plus-darker",
+        "plus-lighter": "plus-lighter",
+      },
+      label: "blend",
+    });
+
+    settings.addBinding(config, "scale", {
+      min: -1000,
+      max: 1000,
+      step: 1,
+      label: "scale",
+    });
+
+    const abb = settings.addFolder({ title: "chromatic" });
+    abb.addBinding(config, "r", {
+      min: -100,
+      max: 100,
+      step: 1,
+      label: "red",
+    });
+    abb.addBinding(config, "g", {
+      min: -100,
+      max: 100,
+      step: 1,
+      label: "green",
+    });
+    abb.addBinding(config, "b", {
+      min: -100,
+      max: 100,
+      step: 1,
+      label: "blue",
+    });
+
+    document.documentElement.style.setProperty("--size", config.size);
     Draggable.create(".effect", {
       type: "x,y",
     });
+
+    ctrl.on("change", sync);
     update();
+
+    // on load – we need to align the .effect
+    const { top, left } = document
+      .querySelector(".dock-placeholder")
+      .getBoundingClientRect();
+    gsap.set(".effect", {
+      top: top > window.innerHeight ? window.innerHeight * 0.5 : top,
+      left,
+      opacity: 1,
+    });
   }, []);
 
   return (
-    <div className="effect">
-      <div className="child-wrap">{children}</div>
-      <svg className="filter" xmlns="http://www.w3.org/2000/svg">
-        {/* 容器元素 */}
-        <defs>
-          {/* 滤镜元素 */}
-          <filter id="filter" colorInterpolationFilters="sRGB">
-            {/* 引入位移映射图像 */}
-            <feImage
-              x="0"
-              y="0"
-              width="100%"
-              height="100%"
-              result="map"
-            ></feImage>
-            {/* 创建位移映射效果-红色通道 */}
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="map"
-              id="redchannel"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="dispRed"
-            />
-            {/* 颜色通道矩阵变换-红色通道 */}
-            <feColorMatrix
-              in="dispRed"
-              type="matrix"
-              values="1 0 0 0 0
+    <>
+      <div className="effect">
+        <div className="nav-wrap">
+          <nav>
+            <img src="https://assets.codepen.io/605876/finder.png" />
+            <img src="https://assets.codepen.io/605876/launch-control.png" />
+            <img src="https://assets.codepen.io/605876/safari.png" />
+            <img src="https://assets.codepen.io/605876/calendar.png" />
+          </nav>
+        </div>
+        <svg className="filter" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="filter" colorInterpolationFilters="sRGB">
+              {/* <!-- the input displacement image --> */}
+              <feImage
+                x="0"
+                y="0"
+                width="100%"
+                height="100%"
+                result="map"
+              ></feImage>
+              {/* <!-- the displacement map to use --> */}
+              {/* <!-- <feDisplacementMap in2="map" in="SourceGraphic" /> --> */}
+              {/* <!-- the chromatic aberration for the people --> */}
+              {/* <!-- RED channel with strongest displacement --> */}
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="map"
+                id="redchannel"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                result="dispRed"
+              />
+              <feColorMatrix
+                in="dispRed"
+                type="matrix"
+                values="1 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 1 0"
-              result="red"
-            />
-            {/* 创建位移映射效果-绿色通道 */}
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="map"
-              id="greenchannel"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="dispGreen"
-            />
-            {/* 颜色通道矩阵变换-绿色通道 */}
-            <feColorMatrix
-              in="dispGreen"
-              type="matrix"
-              values="0 0 0 0 0
+                result="red"
+              />
+              {/* <!-- GREEN channel (reference / least displaced) --> */}
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="map"
+                id="greenchannel"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                result="dispGreen"
+              />
+              <feColorMatrix
+                in="dispGreen"
+                type="matrix"
+                values="0 0 0 0 0
                       0 1 0 0 0
                       0 0 0 0 0
                       0 0 0 1 0"
-              result="green"
-            />
-            {/* 创建位移映射效果-蓝色通道 */}
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="map"
-              id="bluechannel"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="dispBlue"
-            />
-            {/* 颜色通道矩阵变换-蓝色通道 */}
-            <feColorMatrix
-              in="dispBlue"
-              type="matrix"
-              values="0 0 0 0 0
+                result="green"
+              />
+              {/* <!-- BLUE channel with medium displacement --> */}
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="map"
+                id="bluechannel"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                result="dispBlue"
+              />
+              <feColorMatrix
+                in="dispBlue"
+                type="matrix"
+                values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 1 0 0
                       0 0 0 1 0"
-              result="blue"
-            />
-            {/* 第一次混合-红绿通道 */}
-            <feBlend in="red" in2="green" mode="screen" result="rg" />
-            {/* 第二次混合-红绿蓝通道 */}
-            <feBlend in="rg" in2="blue" mode="screen" result="output" />
-            {/* 高斯模糊处理 */}
-            <feGaussianBlur in="output" stdDeviation="0.7" />
-          </filter>
-        </defs>
-      </svg>
+                result="blue"
+              />
+              {/* <!-- Blend channels back together --> */}
+              <feBlend in="red" in2="green" mode="screen" result="rg" />
+              <feBlend in="rg" in2="blue" mode="screen" result="output" />
+              {/* <!-- output blend --> */}
+              <feGaussianBlur in="output" stdDeviation="0.7" />
+            </filter>
+          </defs>
+        </svg>
+        <div className="displacement-debug"></div>
+      </div>
 
-      {/* 移位图调试 */}
-      <div className="displacement-debug"></div>
-    </div>
+      <main>
+        {/* <!-- dock placeholder and instruction --> */}
+        <section className="placeholder">
+          <div className="dock-placeholder"></div>
+        </section>
+        {/* <!-- some random text stuff --> */}
+      </main>
+    </>
   );
 }
 
-export default LiquidGlass;
+export default OldGlass;
