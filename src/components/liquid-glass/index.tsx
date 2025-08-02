@@ -6,16 +6,18 @@ import { useDisplacementImage } from "./hooks/useDisplacementImage";
 import { useStylesUpdater } from "./hooks/useStylesUpdater";
 import { useTweakpaneConfig } from "./hooks/useTweakpaneConfig";
 import { useEffectPositioning } from "./hooks/useEffectPositioning";
-import { NavigationIcons } from "./components/NavigationIcons";
 import { SVGFilter } from "./components/SVGFilter";
 import { DisplacementDebug } from "./components/DisplacementDebug";
 import { EffectPlaceholder } from "./components/EffectPlaceholder";
 
+interface LiquidGlassProps {
+  children?: React.ReactNode;
+}
+
 /**
  * 液体玻璃效果组件
- * 重构后的版本，使用hooks和细粒度组件
  */
-function LiquidGlass() {
+function LiquidGlass({ children }: LiquidGlassProps) {
   // 初始化GSAP
   useGsapInit();
 
@@ -63,7 +65,7 @@ function LiquidGlass() {
   return (
     <>
       <div className="effect">
-        <NavigationIcons />
+        {children}
         <SVGFilter />
         <DisplacementDebug />
       </div>

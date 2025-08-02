@@ -1,4 +1,4 @@
-import { BaseConfig, Config } from '../types';
+import type { BaseConfig, Config } from "../types";
 
 // 常量定义
 export const BASE_CONFIG: BaseConfig = {
@@ -111,18 +111,18 @@ export const BLEND_OPTIONS = {
 export const APP_ICONS = [
   {
     src: "https://assets.codepen.io/605876/finder.png",
-    alt: "Finder"
+    alt: "Finder",
   },
   {
     src: "https://assets.codepen.io/605876/launch-control.png",
-    alt: "Launch Control"
+    alt: "Launch Control",
   },
   {
     src: "https://assets.codepen.io/605876/safari.png",
-    alt: "Safari"
+    alt: "Safari",
   },
   {
     src: "https://assets.codepen.io/605876/calendar.png",
-    alt: "Calendar"
-  }
+    alt: "Calendar",
+  },
 ] as const;
