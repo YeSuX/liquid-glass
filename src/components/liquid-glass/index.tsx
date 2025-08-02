@@ -1,9 +1,9 @@
 import React from "react";
 import "./index.css";
-import { Pane } from "tweakpane";
+import { Pane, FolderApi } from "tweakpane";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
-import { useEffect, useCallback, useMemo } from "react";
+import { useEffect, useCallback } from "react";
 
 // 类型定义
 interface Config {
@@ -47,6 +47,19 @@ interface BaseConfig {
   g: number;
   b: number;
   saturation: number;
+}
+
+// 事件类型定义
+interface TweakpaneEvent {
+  target: {
+    controller: {
+      view: {
+        labelElement: {
+          innerText: string;
+        };
+      };
+    };
+  };
 }
 
 // 常量定义
@@ -269,9 +282,9 @@ function LiquidGlass() {
 
   // 同步函数，处理视图过渡
   const sync = useCallback(
-    (config: Config, event?: any) => {
+    (config: Config, event?: TweakpaneEvent) => {
       const shouldUseTransition =
-        document.startViewTransition &&
+        document.startViewTransition() &&
         event?.target?.controller?.view?.labelElement?.innerText &&
         ["theme", "top"].includes(
           event.target.controller.view.labelElement.innerText
@@ -288,7 +301,7 @@ function LiquidGlass() {
 
   // 预设变更处理函数
   const handlePresetChange = useCallback(
-    (config: Config, ctrl: Pane, settings: any) => {
+    (config: Config, ctrl: Pane, settings: FolderApi) => {
       document.documentElement.dataset.mode = config.preset;
       settings.expanded = config.preset === "free";
       settings.disabled = config.preset !== "free";
@@ -469,7 +482,9 @@ function LiquidGlass() {
       });
 
       // 监听变化事件
-      ctrl.on("change", (event) => sync(config, event));
+      ctrl.on("change", (event) =>
+        sync(config, event as unknown as TweakpaneEvent)
+      );
 
       // 初始化更新
       update(config);
