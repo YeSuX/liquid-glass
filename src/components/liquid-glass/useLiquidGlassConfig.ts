@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Pane } from "tweakpane";
+import { Pane, TpChangeEvent } from "tweakpane";
 import type { LiquidGlassConfig, PresetType } from "./types";
 import {
   PRESETS,
@@ -12,12 +12,17 @@ import {
 interface UseLiquidGlassConfigOptions {
   initialPreset?: PresetType;
   showControls?: boolean;
+  onChange?: (value: TpChangeEvent<unknown>) => void;
 }
 
 export const useLiquidGlassConfig = (
   options: UseLiquidGlassConfigOptions = {}
 ) => {
-  const { initialPreset = "pill", showControls = true } = options;
+  const {
+    initialPreset = "pill",
+    showControls = true,
+    onChange = () => {},
+  } = options;
 
   const [config, setConfig] = useState<LiquidGlassConfig>(
     () =>
@@ -86,6 +91,8 @@ export const useLiquidGlassConfig = (
       .on("change", (ev) => {
         updateConfig({ theme: ev.value as "system" | "light" | "dark" });
       });
+
+    pane.on("change", onChange);
 
     // Settings folder
     const settings = pane.addFolder({
