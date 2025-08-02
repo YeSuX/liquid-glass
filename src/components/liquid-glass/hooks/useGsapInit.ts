@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import gsap from 'gsap';
-import Draggable from 'gsap/Draggable';
+import { useEffect } from "react";
+import gsap from "gsap";
+import Draggable from "gsap/Draggable";
 
 /**
  * GSAP初始化hook

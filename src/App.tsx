@@ -1,224 +1,27 @@
+import React from "react";
+import { DynamicLiquidGlassExample } from "./components/liquid-glass/example";
 import LiquidGlass from "./components/liquid-glass";
-import "./index.css";
-import { useState, useEffect } from "react";
 
-const RichPage = () => {
-  const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
-
-  // 初始化主题
-  useEffect(() => {
-    const savedTheme =
-      (localStorage.getItem("theme") as "system" | "light" | "dark") ||
-      "system";
-    setTheme(savedTheme);
-    applyTheme(savedTheme);
-  }, []);
-
-  // 应用主题
-  const applyTheme = (newTheme: "system" | "light" | "dark") => {
-    const root = document.documentElement;
-
-    if (newTheme === "system") {
-      // 使用系统主题
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      root.dataset.theme = systemTheme;
-    } else {
-      root.dataset.theme = newTheme;
-    }
-
-    localStorage.setItem("theme", newTheme);
-  };
-
-  // 切换主题
-  const toggleTheme = () => {
-    const themes: ("system" | "light" | "dark")[] = ["system", "light", "dark"];
-    const currentIndex = themes.indexOf(theme);
-    const nextTheme = themes[(currentIndex + 1) % themes.length];
-
-    setTheme(nextTheme);
-    applyTheme(nextTheme);
-  };
-
-  // 获取主题图标
-  const getThemeIcon = () => {
-    switch (theme) {
-      case "light":
-        return "☀️";
-      case "dark":
-        return "🌙";
-      case "system":
-        return "🖥️";
-      default:
-        return "🖥️";
-    }
-  };
-
+function App() {
   return (
-    <div className="rich-page">
-      <LiquidGlass />
-
-      {/* 主题切换按钮 */}
-      <button
-        className="theme-toggle"
-        onClick={toggleTheme}
-        title={`当前主题: ${
-          theme === "system" ? "跟随系统" : theme === "light" ? "浅色" : "深色"
-        }`}
-      >
-        {getThemeIcon()}
-      </button>
-
-      {/* 顶部导航栏 */}
-      <header className="rich-header">
-        <nav className="rich-nav">
-          <div className="logo">
-            <h1>🎨 Rich Design</h1>
-          </div>
-          <ul className="nav-links">
-            <li>
-              <a href="#home">首页</a>
-            </li>
-            <li>
-              <a href="#about">关于</a>
-            </li>
-            <li>
-              <a href="#services">服务</a>
-            </li>
-            <li>
-              <a href="#contact">联系</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      {/* 英雄区域 */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h2 className="hero-title">欢迎来到多彩世界</h2>
-          <p className="hero-subtitle">体验丰富的视觉设计和交互效果</p>
-          <button className="cta-button">开始探索</button>
-        </div>
-        <div className="hero-background">
-          <div className="floating-shapes">
-            <div className="shape shape-1"></div>
-            <div className="shape shape-2"></div>
-            <div className="shape shape-3"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* 特色卡片区域 */}
-      <section className="features-section">
-        <div className="container">
-          <h2 className="section-title">特色功能</h2>
-          <div className="features-grid">
-            <div className="feature-card card-primary">
-              <div className="card-icon">🚀</div>
-              <h3>高性能</h3>
-              <p>优化的性能表现，流畅的用户体验</p>
-            </div>
-            <div className="feature-card card-secondary">
-              <div className="card-icon">🎨</div>
-              <h3>美观设计</h3>
-              <p>现代化的界面设计，视觉效果出众</p>
-            </div>
-            <div className="feature-card card-tertiary">
-              <div className="card-icon">⚡</div>
-              <h3>快速响应</h3>
-              <p>快速加载，响应式设计适配各种设备</p>
-            </div>
-            <div className="feature-card card-quaternary">
-              <div className="card-icon">🔧</div>
-              <h3>易于定制</h3>
-              <p>灵活的配置选项，满足个性化需求</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 统计数据区域 */}
-      <section className="stats-section">
-        <div className="container">
-          <div className="stats-grid">
-            <div className="stat-item">
-              <div className="stat-number">1000+</div>
-              <div className="stat-label">满意用户</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-number">50+</div>
-              <div className="stat-label">项目完成</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-number">24/7</div>
-              <div className="stat-label">技术支持</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-number">99%</div>
-              <div className="stat-label">正常运行时间</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 内容区域 */}
-      <section className="content-section">
-        <div className="container">
-          <div className="content-grid">
-            <div className="content-left">
-              <h2>关于我们</h2>
-              <p>
-                我们致力于创造卓越的数字体验，通过创新的设计和技术解决方案帮助客户实现目标。
-              </p>
-              <ul className="feature-list">
-                <li>✨ 创新设计理念</li>
-                <li>🔥 前沿技术栈</li>
-                <li>💡 专业团队支持</li>
-                <li>🎯 结果导向服务</li>
-              </ul>
-            </div>
-            <div className="content-right">
-              <div className="image-placeholder">
-                <div className="placeholder-content">
-                  <span>🖼️</span>
-                  <p>精美图片展示区域</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 底部区域 */}
-      <footer className="rich-footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h3>联系方式</h3>
-              <p>📧 contact@example.com</p>
-              <p>📱 +86 123 4567 8900</p>
-            </div>
-            <div className="footer-section">
-              <h3>关注我们</h3>
-              <div className="social-links">
-                <a href="#" className="social-link">
-                  🐦 Twitter
-                </a>
-                <a href="#" className="social-link">
-                  📘 Facebook
-                </a>
-                <a href="#" className="social-link">
-                  📷 Instagram
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+    <div>
+      {/* <LiquidGlassExample /> */}
+      {/* 效果展示 */}
+      <LiquidGlass enableTweakpane={true} />
+      <div>
+        <h1>蛇结</h1>
+        <p>
+          此时，我似乎能感受得到，能看得到，能碰触得到我的邪恶。这邪恶的根源并不尽在这丑陋的蝰蛇巢穴之中，对孩子们的恨、报复的欲望和对金钱的贪恋并非我邪恶的全部。我的问题在于拒绝摆脱同这一条条蝰蛇的纠缠。我局限于这团肮脏的蛇结之中，蛇结俨然成了我的心脏，我已分不清哪是我的心跳，哪是这群爬行动物的蠕动。在半个世纪的时间里，我所见到的自己，其实绝非我的本来面目。不仅如此，我还以同样武断的方式去揣测他人。孩子们脸上那一抹可怜的贪婪成了永远盘踞于我脑海的印象。愚蠢是罗伯特给我留下的印象，我便永远拘囿于这一成见。我向来不会想到，若要认识别人，就必须突破别人向我呈现的表象，必须跨越这一表象，这是一个我原本在三四十岁时就应该体悟的道理。可是，如今我已人老心衰，只能看着我人生的最后一个秋天令这片葡萄园陷人沉滞，令这片葡萄园陷人烟雾与阳光交织的麻木之中。我爱的人都已死去，原本会爱我的人也已死去，活着的人，我没有时间，也没有气力朝他们奔去并重新了解他们。时至今日，我身上的一切特点，乃至声音、举止或笑容，无一不属于当初我为了与世人对抗而调教出来的恶魔，我还给了这恶魔我的名字。
+          我本指望一到家就能看到胡贝尔和吉娜维耶芙：他们答应过要和我共进晚餐。这是我平生第一次期待他们的到来并为之感到喜悦。我迫不及待地想要向他们展示我全新的心境。我想了解他们，想让他们了解我，一分钟都不能浪费。我死前可有足够的时间检验我的新发现？我得马不停蹄奔向孩子们的心扉，得穿越将我们隔开的一切屏障。蛇结终于斩断了，我要闯人他们的爱，令他们猝不及防，随即再让他们含泪为我合上双眼。
+        </p>
+        <img
+          style={{ width: "300px", height: "200px" }}
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnZbmHYag8QRVQaJ6a_Bomir3LSlAAnPEb1w&s"
+          alt=""
+        />
+      </div>
     </div>
   );
-};
+}
 
-export default RichPage;
+export default App;

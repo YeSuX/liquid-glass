@@ -15,6 +15,7 @@ import {
 interface UseTweakpaneConfigOptions {
   onConfigUpdate: (config: Config) => void;
   onSync: (config: Config, event?: TweakpaneEvent) => void;
+  enabled?: boolean;
 }
 
 /**
@@ -23,6 +24,7 @@ interface UseTweakpaneConfigOptions {
 export const useTweakpaneConfig = ({
   onConfigUpdate,
   onSync,
+  enabled = true,
 }: UseTweakpaneConfigOptions) => {
   // 预设变更处理函数
   const handlePresetChange = useCallback(
@@ -49,6 +51,11 @@ export const useTweakpaneConfig = ({
   );
 
   useEffect(() => {
+    // 如果未启用tweakpane，直接返回
+    if (!enabled) {
+      return;
+    }
+
     const config = { ...INITIAL_CONFIG };
 
     try {
@@ -220,5 +227,5 @@ export const useTweakpaneConfig = ({
     } catch (error) {
       console.error("Failed to initialize liquid glass effect:", error);
     }
-  }, [onConfigUpdate, onSync, handlePresetChange]);
+  }, [onConfigUpdate, onSync, handlePresetChange, enabled]);
 };
