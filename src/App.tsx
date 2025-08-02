@@ -1,10 +1,76 @@
 import LiquidGlass from "./components/liquid-glass";
 import "./index.css";
+import { useState, useEffect } from "react";
 
 const RichPage = () => {
+  const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
+
+  // 初始化主题
+  useEffect(() => {
+    const savedTheme =
+      (localStorage.getItem("theme") as "system" | "light" | "dark") ||
+      "system";
+    setTheme(savedTheme);
+    applyTheme(savedTheme);
+  }, []);
+
+  // 应用主题
+  const applyTheme = (newTheme: "system" | "light" | "dark") => {
+    const root = document.documentElement;
+
+    if (newTheme === "system") {
+      // 使用系统主题
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+      root.dataset.theme = systemTheme;
+    } else {
+      root.dataset.theme = newTheme;
+    }
+
+    localStorage.setItem("theme", newTheme);
+  };
+
+  // 切换主题
+  const toggleTheme = () => {
+    const themes: ("system" | "light" | "dark")[] = ["system", "light", "dark"];
+    const currentIndex = themes.indexOf(theme);
+    const nextTheme = themes[(currentIndex + 1) % themes.length];
+
+    setTheme(nextTheme);
+    applyTheme(nextTheme);
+  };
+
+  // 获取主题图标
+  const getThemeIcon = () => {
+    switch (theme) {
+      case "light":
+        return "☀️";
+      case "dark":
+        return "🌙";
+      case "system":
+        return "🖥️";
+      default:
+        return "🖥️";
+    }
+  };
+
   return (
     <div className="rich-page">
       <LiquidGlass />
+
+      {/* 主题切换按钮 */}
+      <button
+        className="theme-toggle"
+        onClick={toggleTheme}
+        title={`当前主题: ${
+          theme === "system" ? "跟随系统" : theme === "light" ? "浅色" : "深色"
+        }`}
+      >
+        {getThemeIcon()}
+      </button>
+
       {/* 顶部导航栏 */}
       <header className="rich-header">
         <nav className="rich-nav">

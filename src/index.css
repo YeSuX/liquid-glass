@@ -1,3 +1,229 @@
+/* 主题切换按钮样式 */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* 暗黑模式样式 */
+[data-theme="dark"] .rich-page {
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .features-section {
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+}
+
+[data-theme="dark"] .section-title {
+  background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .feature-card {
+  background: #374151;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid #4b5563;
+}
+
+[data-theme="dark"] .feature-card h3 {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .feature-card p {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .feature-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border-color: #6b7280;
+}
+
+[data-theme="dark"] .stats-section {
+  background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 100%);
+}
+
+[data-theme="dark"] .content-section {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+}
+
+[data-theme="dark"] .content-left h2 {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .content-left p {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .feature-list li {
+  color: #e5e7eb;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+}
+
+[data-theme="dark"] .feature-list li:hover {
+  color: #f59e0b;
+}
+
+[data-theme="dark"] .image-placeholder {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="dark"] .rich-footer {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+}
+
+[data-theme="dark"] .social-link:hover {
+  background: rgba(236, 240, 241, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #4f46e5, #7c3aed);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* 系统主题检测 - 当用户选择跟随系统且系统为暗色时 */
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] .rich-page {
+    color: #e5e7eb;
+  }
+
+  [data-theme="system"] .features-section {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+  }
+
+  [data-theme="system"] .section-title {
+    background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  [data-theme="system"] .feature-card {
+    background: #374151;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid #4b5563;
+  }
+
+  [data-theme="system"] .feature-card h3 {
+    color: #f9fafb;
+  }
+
+  [data-theme="system"] .feature-card p {
+    color: #d1d5db;
+  }
+
+  [data-theme="system"] .feature-card:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border-color: #6b7280;
+  }
+
+  [data-theme="system"] .stats-section {
+    background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 100%);
+  }
+
+  [data-theme="system"] .content-section {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  }
+
+  [data-theme="system"] .content-left h2 {
+    color: #f9fafb;
+  }
+
+  [data-theme="system"] .content-left p {
+    color: #d1d5db;
+  }
+
+  [data-theme="system"] .feature-list li {
+    color: #e5e7eb;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+  }
+
+  [data-theme="system"] .feature-list li:hover {
+    color: #f59e0b;
+  }
+
+  [data-theme="system"] .image-placeholder {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+  }
+
+  [data-theme="system"] .rich-footer {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  }
+
+  [data-theme="system"] .social-link:hover {
+    background: rgba(236, 240, 241, 0.2);
+  }
+
+  [data-theme="system"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+  }
+
+  [data-theme="system"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* 主题切换动画效果 */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* 让某些元素不参与主题切换动画，避免影响其他动画 */
+.hero-section,
+.floating-shapes,
+.shape,
+.loading-animation {
+  transition: none;
+}
+
+/* 确保英雄区域在暗黑模式下仍然保持彩色渐变 */
+[data-theme="dark"] .hero-section,
+[data-theme="system"] .hero-section {
+  /* 保持原有的彩色渐变，不做修改 */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -24,6 +250,8 @@ body {
   background: light-dark(#fff, #000);
   overflow-x: hidden;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .rich-page {
@@ -504,6 +732,75 @@ body {
   border-color: rgba(236, 240, 241, 0.6);
 }
 
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #5a6fd8, #6a4190);
+}
+
+/* 额外的动画效果 */
+.rich-page {
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 鼠标悬浮时的全局效果 */
+.feature-card:hover .card-icon {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+}
+
+/* 加载动画 */
+.loading-animation {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .rich-nav {
@@ -572,71 +869,182 @@ body {
   }
 }
 
-/* 滚动条样式 */
-::-webkit-scrollbar {
-  width: 8px;
+/* 暗黑模式样式 */
+[data-theme="dark"] .rich-page {
+  color: #e5e7eb;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+[data-theme="dark"] .features-section {
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
 }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  border-radius: 4px;
+[data-theme="dark"] .section-title {
+  background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #5a6fd8, #6a4190);
+[data-theme="dark"] .feature-card {
+  background: #374151;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid #4b5563;
 }
 
-/* 额外的动画效果 */
-.rich-page {
-  animation: fadeIn 1s ease-out;
+[data-theme="dark"] .feature-card h3 {
+  color: #f9fafb;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+[data-theme="dark"] .feature-card p {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .feature-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border-color: #6b7280;
+}
+
+[data-theme="dark"] .stats-section {
+  background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 100%);
+}
+
+[data-theme="dark"] .content-section {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+}
+
+[data-theme="dark"] .content-left h2 {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .content-left p {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .feature-list li {
+  color: #e5e7eb;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+}
+
+[data-theme="dark"] .feature-list li:hover {
+  color: #f59e0b;
+}
+
+[data-theme="dark"] .image-placeholder {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="dark"] .rich-footer {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+}
+
+[data-theme="dark"] .social-link:hover {
+  background: rgba(236, 240, 241, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #4f46e5, #7c3aed);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* 系统主题检测 - 当用户选择跟随系统且系统为暗色时 */
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] .rich-page {
+    color: #e5e7eb;
   }
-  to {
-    opacity: 1;
-  }
-}
 
-/* 鼠标悬浮时的全局效果 */
-.feature-card:hover .card-icon {
-  animation: bounce 0.6s ease;
-}
-
-@keyframes bounce {
-  0%,
-  20%,
-  60%,
-  100% {
-    transform: translateY(0);
+  [data-theme="system"] .features-section {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
   }
-  40% {
-    transform: translateY(-10px);
-  }
-  80% {
-    transform: translateY(-5px);
-  }
-}
 
-/* 加载动画 */
-.loading-animation {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
-}
+  [data-theme="system"] .section-title {
+    background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  [data-theme="system"] .feature-card {
+    background: #374151;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid #4b5563;
+  }
+
+  [data-theme="system"] .feature-card h3 {
+    color: #f9fafb;
+  }
+
+  [data-theme="system"] .feature-card p {
+    color: #d1d5db;
+  }
+
+  [data-theme="system"] .feature-card:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border-color: #6b7280;
+  }
+
+  [data-theme="system"] .stats-section {
+    background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 100%);
+  }
+
+  [data-theme="system"] .content-section {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  }
+
+  [data-theme="system"] .content-left h2 {
+    color: #f9fafb;
+  }
+
+  [data-theme="system"] .content-left p {
+    color: #d1d5db;
+  }
+
+  [data-theme="system"] .feature-list li {
+    color: #e5e7eb;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+  }
+
+  [data-theme="system"] .feature-list li:hover {
+    color: #f59e0b;
+  }
+
+  [data-theme="system"] .image-placeholder {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+  }
+
+  [data-theme="system"] .rich-footer {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  }
+
+  [data-theme="system"] .social-link:hover {
+    background: rgba(236, 240, 241, 0.2);
+  }
+
+  [data-theme="system"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+  }
+
+  [data-theme="system"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.5);
   }
 }
