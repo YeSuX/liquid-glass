@@ -1,27 +1,40 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./index.css";
-import gsap from "gsap";
+import { LiquidGlassProps } from "./types";
+import { useLiquidGlassConfig } from "./useLiquidGlassConfig";
 
-interface LiquidGlassProps {
-  children: React.ReactNode;
-}
+function LiquidGlass({
+  children,
+  initialPreset = "pill",
+  showControls = true,
+}: LiquidGlassProps) {
+  const { config } = useLiquidGlassConfig({
+    initialPreset,
+    showControls,
+  });
 
-function LiquidGlass({ children }: LiquidGlassProps) {
-  const svgNode = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  const serialized = new XMLSerializer().serializeToString(svgNode);
-  const encoded = encodeURIComponent(serialized);
-  const dataUri = `data:image/svg+xml,${encoded}`;
-  useEffect(() => {
-    gsap.set("feImage", {
-      attr: {
-        href: dataUri,
-      },
-    });
-  }, []);
+  const containerStyle = {
+    width: config.width ? `${config.width}px` : "auto",
+    height: config.height ? `${config.height}px` : "auto",
+    borderRadius: config.radius ? `${config.radius}px` : "8px",
+    opacity: config.alpha,
+    backdropFilter: config.blur ? `blur(${config.blur}px)` : "none",
+    transform: config.debug ? "none" : undefined,
+    zIndex: config.top ? 999999 : "auto",
+  };
+
+  const filterStyle = {
+    filter: config.debug ? "none" : "url(#filter)",
+  };
+
   return (
-    <div className="effect">
+    <div className="effect" style={containerStyle}>
       <div className="child-wrap">{children}</div>
-      <svg className="filter" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        className="filter"
+        style={filterStyle}
+        xmlns="http://www.w3.org/2000/svg"
+      >
         {/* 容器元素 */}
         <defs>
           {/* 滤镜元素 */}
