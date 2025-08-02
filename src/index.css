@@ -2,6 +2,30 @@
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: light dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light only;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark only;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+body {
+  background: light-dark(#fff, #000);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
 .rich-page {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;

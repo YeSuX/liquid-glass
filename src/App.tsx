@@ -1,9 +1,10 @@
-import React from "react";
+import LiquidGlass from "./components/liquid-glass";
 import "./index.css";
 
 const RichPage = () => {
   return (
     <div className="rich-page">
+      <LiquidGlass />
       {/* 顶部导航栏 */}
       <header className="rich-header">
         <nav className="rich-nav">
