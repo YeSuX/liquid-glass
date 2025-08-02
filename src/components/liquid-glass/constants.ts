@@ -1,4 +1,4 @@
-import { LiquidGlassConfig } from './types';
+import type { LiquidGlassConfig } from "./types";
 
 export const BASE_CONFIG: Partial<LiquidGlassConfig> = {
   icons: false,
