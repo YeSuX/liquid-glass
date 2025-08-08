@@ -1,7 +1,34 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import dts from "vite-plugin-dts";
+import { resolve } from "path";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    dts({
+      insertTypesEntry: true,
+      include: ["src/lib/**/*"],
+      exclude: ["src/main.tsx", "src/App.tsx"],
+    }),
+  ],
+  build: {
+    lib: {
+      entry: resolve(__dirname, "src/lib/index.ts"),
+      name: "LiquidGlass",
+      formats: ["es", "umd"],
+      fileName: (format) =>
+        `liquid-glass.${format === "es" ? "js" : "umd.cjs"}`,
+    },
+    rollupOptions: {
+      external: ["react", "react-dom"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
+    },
+    cssCodeSplit: false,
+  },
+});

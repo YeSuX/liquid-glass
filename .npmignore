@@ -1,0 +1,13 @@
+src/
+public/
+.vscode/
+.git/
+.gitignore
+*.log
+node_modules/
+.env*
+vite.config.ts
+tsconfig*.json
+eslint.config.js
+index.html
+pnpm-lock.yaml
