@@ -1,69 +1,173 @@
-# React + TypeScript + Vite
+# Liquid Glass
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React component library for creating stunning liquid glass effects with GSAP animations.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🌊 Smooth liquid glass morphing effects
+- 🎨 Highly customizable appearance
+- 🎯 TypeScript support
+- 📱 Responsive design
+- 🎮 Optional Tweakpane controls for development
+- 🚀 Optimized performance with GSAP
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install liquid-glass
+# or
+yarn add liquid-glass
+# or
+pnpm add liquid-glass
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Peer Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Make sure you have the required peer dependencies installed:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install react react-dom
 ```
+
+## Usage
+
+### Basic Usage
+
+```tsx
+import LiquidGlass from "liquid-glass";
+import "liquid-glass/dist/style.css";
+
+function App() {
+  return (
+    <LiquidGlass>
+      <div>Your content here</div>
+    </LiquidGlass>
+  );
+}
+```
+
+### Advanced Usage with Custom Configuration
+
+```tsx
+import LiquidGlass from "liquid-glass";
+import "liquid-glass/dist/style.css";
+
+function App() {
+  return (
+    <LiquidGlass
+      width={400}
+      height={300}
+      radius={20}
+      blur={10}
+      alpha={0.8}
+      preset="bubble"
+      theme="dark"
+      draggable={true}
+      enableTweakpane={false}
+    >
+      <div>Your content with liquid glass effect</div>
+    </LiquidGlass>
+  );
+}
+```
+
+### Development Mode with Tweakpane
+
+```tsx
+import LiquidGlass from "liquid-glass";
+import "liquid-glass/dist/style.css";
+
+function App() {
+  return (
+    <LiquidGlass enableTweakpane={true}>
+      <div>Content with live controls</div>
+    </LiquidGlass>
+  );
+}
+```
+
+## API Reference
+
+### Props
+
+| Prop              | Type                                     | Default | Description                                 |
+| ----------------- | ---------------------------------------- | ------- | ------------------------------------------- |
+| `children`        | `React.ReactNode`                        | -       | Content to apply the liquid glass effect to |
+| `enableTweakpane` | `boolean`                                | `false` | Enable development controls                 |
+| `icons`           | `boolean`                                | -       | Show icons in the effect                    |
+| `debug`           | `boolean`                                | -       | Enable debug mode                           |
+| `top`             | `boolean`                                | -       | Position effect at top                      |
+| `preset`          | `"dock" \| "pill" \| "bubble" \| "free"` | -       | Predefined effect presets                   |
+| `theme`           | `"system" \| "light" \| "dark"`          | -       | Theme variant                               |
+| `width`           | `number`                                 | -       | Effect width in pixels                      |
+| `height`          | `number`                                 | -       | Effect height in pixels                     |
+| `radius`          | `number`                                 | -       | Border radius                               |
+| `border`          | `number`                                 | -       | Border width                                |
+| `alpha`           | `number`                                 | -       | Opacity (0-1)                               |
+| `lightness`       | `number`                                 | -       | Lightness adjustment                        |
+| `blur`            | `number`                                 | -       | Blur intensity                              |
+| `displace`        | `number`                                 | -       | Displacement effect strength                |
+| `frost`           | `number`                                 | -       | Frost effect intensity                      |
+| `saturation`      | `number`                                 | -       | Color saturation                            |
+| `scale`           | `number`                                 | -       | Scale factor                                |
+| `blend`           | `string`                                 | -       | CSS blend mode                              |
+| `x`               | `string`                                 | -       | X position                                  |
+| `y`               | `string`                                 | -       | Y position                                  |
+| `r`               | `number`                                 | -       | Red channel adjustment                      |
+| `g`               | `number`                                 | -       | Green channel adjustment                    |
+| `b`               | `number`                                 | -       | Blue channel adjustment                     |
+| `draggable`       | `boolean`                                | `true`  | Enable drag interaction                     |
+
+### TypeScript Support
+
+The library includes full TypeScript definitions:
+
+```tsx
+import LiquidGlass, { Config, BaseConfig } from "liquid-glass";
+
+const config: Partial<Config> = {
+  width: 400,
+  height: 300,
+  blur: 10,
+  alpha: 0.8,
+};
+```
+
+## Browser Compatibility
+
+- Modern browsers with CSS Filter support
+- Chrome 53+
+- Firefox 35+
+- Safari 9.1+
+- Edge 12+
+
+## Performance Considerations
+
+- Uses GSAP for optimized animations
+- CSS filters may impact performance on lower-end devices
+- Consider reducing effect complexity for mobile devices
+- The component automatically handles cleanup and optimization
+
+## Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Build library
+pnpm build:lib
+
+# Lint code
+pnpm lint
+```
+
+## License
+
+MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

@@ -8,8 +8,9 @@ export default defineConfig({
     react(),
     dts({
       insertTypesEntry: true,
-      include: ["src/lib/**/*"],
-      exclude: ["src/main.tsx", "src/App.tsx"],
+      include: ["src/lib/**/*", "src/components/**/*"],
+      exclude: ["src/main.tsx", "src/App.tsx", "**/*.test.*", "**/*.spec.*"],
+      outDir: "dist",
     }),
   ],
   build: {
@@ -21,11 +22,13 @@ export default defineConfig({
         `liquid-glass.${format === "es" ? "js" : "umd.cjs"}`,
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["react", "react-dom", "gsap", "@gsap/react"],
       output: {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
+          gsap: "gsap",
+          "@gsap/react": "GSAPReact",
         },
       },
     },
