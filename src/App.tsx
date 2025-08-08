@@ -4,7 +4,7 @@ function App() {
   return (
     <div>
       {/* 效果展示 */}
-      <LiquidGlass enableTweakpane={false} />
+      <LiquidGlass enableTweakpane={true} />
       <article
         className="article"
         style={{
