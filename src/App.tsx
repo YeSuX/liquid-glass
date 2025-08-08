@@ -1,13 +1,10 @@
-import React from "react";
-import { DynamicLiquidGlassExample } from "./components/liquid-glass/example";
 import LiquidGlass from "./components/liquid-glass";
 
 function App() {
   return (
     <div>
-      {/* <LiquidGlassExample /> */}
       {/* 效果展示 */}
-      <LiquidGlass enableTweakpane={true} />
+      <LiquidGlass enableTweakpane={false} />
       <div>
         <h1>蛇结</h1>
         <p>

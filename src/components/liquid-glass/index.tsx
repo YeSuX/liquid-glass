@@ -47,6 +47,9 @@ interface LiquidGlassProps {
   r?: number;
   g?: number;
   b?: number;
+
+  // 是否拖动
+  draggable?: boolean;
 }
 
 /**
@@ -82,9 +85,10 @@ function LiquidGlass({
   r,
   g,
   b,
+  draggable = true,
 }: LiquidGlassProps) {
   // 初始化GSAP
-  useGsapInit();
+  useGsapInit({ draggable });
 
   // 获取hooks
   const { buildDisplacementImage } = useDisplacementImage();

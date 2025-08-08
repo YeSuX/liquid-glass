@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { Pane, FolderApi } from "tweakpane";
 import gsap from "gsap";
-import Draggable from "gsap/Draggable";
 import type { Config, TweakpaneEvent } from "../types";
 import {
   INITIAL_CONFIG,
@@ -205,11 +204,6 @@ export const useTweakpaneConfig = ({
         max: 100,
         step: 1,
         label: "blue",
-      });
-
-      // 设置拖拽功能
-      Draggable.create(".effect", {
-        type: "x,y",
       });
 
       // 监听变化事件
