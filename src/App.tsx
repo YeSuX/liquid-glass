@@ -5,18 +5,46 @@ function App() {
     <div>
       {/* 效果展示 */}
       <LiquidGlass enableTweakpane={false} />
-      <div>
-        <h1>蛇结</h1>
+      <article
+        className="article"
+        style={{
+          marginTop: 20,
+          width: 800,
+          display: "flex",
+          flexDirection: "column",
+        }}
+        id="article"
+      >
+        <h1>
+          How do address formats differ around the world, and what are the
+          implications of those differences on the design of forms, databases,
+          ontologies, etc. for the Web?
+        </h1>
         <p>
-          此时，我似乎能感受得到，能看得到，能碰触得到我的邪恶。这邪恶的根源并不尽在这丑陋的蝰蛇巢穴之中，对孩子们的恨、报复的欲望和对金钱的贪恋并非我邪恶的全部。我的问题在于拒绝摆脱同这一条条蝰蛇的纠缠。我局限于这团肮脏的蛇结之中，蛇结俨然成了我的心脏，我已分不清哪是我的心跳，哪是这群爬行动物的蠕动。在半个世纪的时间里，我所见到的自己，其实绝非我的本来面目。不仅如此，我还以同样武断的方式去揣测他人。孩子们脸上那一抹可怜的贪婪成了永远盘踞于我脑海的印象。愚蠢是罗伯特给我留下的印象，我便永远拘囿于这一成见。我向来不会想到，若要认识别人，就必须突破别人向我呈现的表象，必须跨越这一表象，这是一个我原本在三四十岁时就应该体悟的道理。可是，如今我已人老心衰，只能看着我人生的最后一个秋天令这片葡萄园陷人沉滞，令这片葡萄园陷人烟雾与阳光交织的麻木之中。我爱的人都已死去，原本会爱我的人也已死去，活着的人，我没有时间，也没有气力朝他们奔去并重新了解他们。时至今日，我身上的一切特点，乃至声音、举止或笑容，无一不属于当初我为了与世人对抗而调教出来的恶魔，我还给了这恶魔我的名字。
-          我本指望一到家就能看到胡贝尔和吉娜维耶芙：他们答应过要和我共进晚餐。这是我平生第一次期待他们的到来并为之感到喜悦。我迫不及待地想要向他们展示我全新的心境。我想了解他们，想让他们了解我，一分钟都不能浪费。我死前可有足够的时间检验我的新发现？我得马不停蹄奔向孩子们的心扉，得穿越将我们隔开的一切屏障。蛇结终于斩断了，我要闯人他们的爱，令他们猝不及防，随即再让他们含泪为我合上双眼。
+          Address formats vary widely across the globe, with differences in
+          structure, content, and the level of granularity. For authors and
+          developers designing forms, databases, or systems that handle
+          addresses, understanding these variations is crucial to avoid
+          frustrating users from other countries. This article will introduce
+          some of the key differences in address formats around the world and
+          provide guidance on how to design systems that can handle them
+          effectively.
         </p>
-        <img
-          style={{ width: "300px", height: "200px" }}
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnZbmHYag8QRVQaJ6a_Bomir3LSlAAnPEb1w&s"
-          alt=""
-        />
-      </div>
+        <p>
+          This is not an exhaustive guide but aims to sensitize you to the
+          complexities of international address formats and the challenges they
+          pose for web design. As with personal names, there is no one specific
+          "perfect" solution, but awareness of these differences is the first
+          step toward building more inclusive systems.
+        </p>
+        <figure>
+          <img
+            src="https://images.unsplash.com/photo-1706720094773-d91e070e4b90?q=80&w=2515&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Photo by Neeqolah Creative Works on Unsplash"
+            width={400}
+          />
+        </figure>
+      </article>
     </div>
   );
 }
